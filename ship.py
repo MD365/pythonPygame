@@ -3,10 +3,10 @@ import pygame
 class Ship():
 
 
-    def __init__(self, screen):
-        '''初始化飞船    '''
+    def __init__(self, ai_settings, screen):
+        '''初始化飞船并设置初始位置    '''
         self.screen = screen
-
+        self.ai_settings = ai_settings
         # 加载飞船图像并获取外形矩形
         self.image = pygame.image.load('images/ship.bmp')
         # 获取飞船的n多种属性
@@ -16,6 +16,8 @@ class Ship():
         # 将窗口的中间、底部坐标属性复制给飞船
         self.rect.centerx = self.screen_rect.centerx  #中间
         self.rect.bottom = self.screen_rect.bottom   #底部
+        #在飞船的属性center中存储小数值
+        self.center = float(self.rect.centerx)
         # 移动标志
         self.moving_right = False
         self.moving_left = False
@@ -26,6 +28,8 @@ class Ship():
     def update(self):
         '''根据移动标志调整飞船的位置'''
         if self.moving_right:
-            self.rect.centerx += 1
+            self.center += self.ai_settings.ship_speed_factor
         if self.moving_left:
-            self.rect.centerx -= 1
+            self.center -= self.ai_settings.ship_speed_factor
+        #根据self.center更新rect对象
+        self.rect.centerx = self.center
