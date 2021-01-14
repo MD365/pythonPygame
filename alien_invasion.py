@@ -3,9 +3,11 @@ import pygame
 from settings import Settings
 from ship import  Ship
 import game_functions as gf
+from pygame.sprite import Group
 def run_game():
     # 初始化创建一个屏幕对象
     pygame.init()
+    # 初始化了飞船速度、游戏框外观等等
     ai_settings = Settings()
     # 绘制一个屏幕
     screen = pygame.display.set_mode(
@@ -16,13 +18,16 @@ def run_game():
 
     #创建一艘飞船
     ship = Ship(ai_settings,screen)
+    #创建一个用于存储子弹的编组
+    bullets = Group()
     # 开始游戏主循环
     while True:
         # 监控键盘和鼠标
-        gf.check_events(ship)
-
+        gf.check_events(ai_settings,screen,ship,bullets)
+        # 调整飞船的位置
         ship.update()
+        bullets.update()
         # 让最近绘制的屏幕可见
-        gf.update_screen(ai_settings,screen,ship)
+        gf.update_screen(ai_settings,screen,ship,bullets)
 
 run_game()
