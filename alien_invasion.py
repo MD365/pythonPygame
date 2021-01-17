@@ -26,7 +26,10 @@ def run_game():
         gf.check_events(ai_settings,screen,ship,bullets)
         # 调整飞船的位置
         ship.update()
-        bullets.update()
+        #删除已经消失的子弹
+        gf.update_bullets(bullets)
+        # 输出写入花费的时间比图形绘制到窗口花费的时间更多
+        # print(len(bullets))
         # 让最近绘制的屏幕可见
         gf.update_screen(ai_settings,screen,ship,bullets)
 
