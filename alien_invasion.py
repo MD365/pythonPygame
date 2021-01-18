@@ -34,6 +34,7 @@ def run_game():
         ship.update()
         #删除已经消失的子弹
         gf.update_bullets(bullets)
+        gf.update_aliens(ai_settings,aliens)
         # 输出写入花费的时间比图形绘制到窗口花费的时间更多
         # print(len(bullets))
         # 让最近绘制的屏幕可见
