@@ -37,7 +37,7 @@ def check_events(ai_settings,screen,ship,bullets):
             check_keyup_events(event,ship)
 
 
-def update_screen(ai_settings, screen, ship,aliens,bullets):
+def update_screen(ai_settings, screen,stats, ship,aliens,bullets,play_button):
     '''重绘屏幕'''
     # 每次循环都重绘屏幕
     # 屏幕背景颜色
@@ -49,6 +49,11 @@ def update_screen(ai_settings, screen, ship,aliens,bullets):
     ship.blitme()
     aliens.draw(screen)
     # 让最新绘制的屏幕可见
+    pygame.display.flip()
+    #如游戏处于非活动状态，就绘制play按钮
+    if not stats.game_active:
+        play_button.draw_button()
+    #让最近汇总的屏幕可见
     pygame.display.flip()
 
 def update_bullets(ai_settings, screen, ship, aliens, bullets):
