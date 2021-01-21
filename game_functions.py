@@ -40,7 +40,7 @@ def check_events(ai_settings,screen,stats,play_button, ship,aliens,bullets):
             check_keydown_events(event,ai_settings,screen,ship,bullets)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event,ship)
-def check_play_button(ai_settings,screen,stats, play_button,ship,aliens,bullets,mouse_x,mouse_y):
+def check_play_button(ai_settings,screen,stats,sb, play_button,ship,aliens,bullets,mouse_x,mouse_y):
     """在玩家单机play按钮是开始新游戏"""
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
@@ -113,7 +113,7 @@ def check_bullet_alien_collisions(ai_settings, screen, stats,sb,ship, aliens, bu
         for aliens in collisions.values():
             stats.score += ai_settings.alien_points * len(aliens)
             sb.prep_score()
-
+        check_high_score(stats, sb)
         # stats.score += ai_settings.alien_points
         # sb.prep_score()
 
@@ -123,7 +123,11 @@ def check_bullet_alien_collisions(ai_settings, screen, stats,sb,ship, aliens, bu
         ai_settings.increase_speed()
         create_fleet(ai_settings,screen, ship, aliens)
 
+        # 提高等级
+        stats.level += 1
+        sb.prep_lever()
 
+        create_fleet(ai_settings,screen,ship, aliens)
 def get_number_aliens_x(ai_settings, alien_width):
     """计算每行可容纳的外星飞船"""
     available_space_x = ai_settings.screen_width - 2 * alien_width
@@ -213,3 +217,9 @@ def check_aliens_bottom(ai_settings, stats, screen, ship, aliens, bullets):
             # 像飞船被撞到一样处理
             ship_hit(ai_settings,stats,screen, ship,aliens,bullets)
             break
+
+def check_high_score(stats, sb):
+    """检查是否诞生了新的最高分"""
+    if stats.score > stats.high_score:
+        stats.high_score = stats.score
+        sb.prep_high_score()

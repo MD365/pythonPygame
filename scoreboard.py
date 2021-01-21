@@ -16,6 +16,7 @@ class Scoreboard():
         #准备出事得分图像
         self.prep_score()
         self.prep_high_score()
+        self.prep_level()
 
 
     def prep_score(self):
@@ -42,4 +43,19 @@ class Scoreboard():
         #将最高的范放在屏幕顶部中央
         self.high_score_rect = self.high_score_image.get_rect()
         self.high_score_rect.centerx = self.screen_rect.centerx
-        self.high_score_rect.top = self.screen_rect.top
+        # self.high_score_rect.top = self.screen_rect.top
+        self.high_score_rect.top = 20
+
+    def prep_level(self):
+        """将等级转化为渲染的图像"""
+        self.level_image = self.font.render(str(self.stats.level),True,self.text_color,self.ai_settings.bg_color)
+        #将等级放在得分下方
+        self.level_rect = self.level_image.get_rect()
+        self.level_rect.right = self.score_rect.right
+        self.level_rect.top = self.score_rect.bottom +10
+
+    def show_score(self):
+        """在屏幕上显示飞船得分"""
+        self.screen.blit(self.score_image, self.score_rect)
+        self.screen.blit(self.high_score_image,self.high_score_rect)
+        self.screen.blit(self.level_image, self.level_rect)
