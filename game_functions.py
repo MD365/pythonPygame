@@ -33,7 +33,7 @@ def check_events(ai_settings,screen,stats,play_button, ship,aliens,bullets):
             sys.exit()
         elif event.type == pygame.MOUSEBUTTONDOWN:
             #返回了鼠标敲击的坐标
-            mouse_x , mouse_y = pygame.mouse.get_pos()
+            mouse_x,mouse_y = pygame.mouse.get_pos()
             check_play_button(ai_settings,screen,stats, play_button,ship,aliens,bullets,mouse_x,mouse_y)
 
         elif event.type == pygame.KEYDOWN:
@@ -52,8 +52,11 @@ def check_play_button(ai_settings,screen,stats,sb, play_button,ship,aliens,bulle
         #重置游戏统计信息
         stats.reset_stats()
         stats.game_active = True
-
-        #情况外星列表和子弹列表
+        #重置计分牌图像
+        sb.prep_score()
+        sb.prep_high_score()
+        sb.prep_level()
+        #清空外星列表和子弹列表
         aliens.empty()
         bullets.empty()
 
